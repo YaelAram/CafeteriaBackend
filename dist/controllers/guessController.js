@@ -20,11 +20,11 @@ const createModel = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const { newModel = false } = req.body;
     if ((0, helpers_1.checkCreateModel)(newModel, response.createdAt)) {
         const numberOfSales = yield model_1.Sale.countDocuments();
-        const [drinkP, ageTemperatureP, ageTemperatureDrinkP] = yield Promise.all([
+        const [drinkP, ageTemperatureP] = yield Promise.all([
             (0, helpers_1.getColdHotDrinkP)(numberOfSales),
             (0, helpers_1.getAgeTemperatureP)(numberOfSales),
-            (0, helpers_1.getAgeTemperatureDinkP)(numberOfSales),
         ]);
+        const ageTemperatureDrinkP = yield (0, helpers_1.getAgeTemperatureDrinkP)(numberOfSales);
         const likelihoodP = (0, helpers_1.getLikelihood)(drinkP, ageTemperatureDrinkP);
         response = {
             sales: numberOfSales,

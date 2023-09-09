@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./checkCreateModel"), exports);
 __exportStar(require("./getProbabilities"), exports);
 __exportStar(require("./guess"), exports);
+__exportStar(require("./queries"), exports);

@@ -15,3 +15,5 @@ salesRouter.post("/", createSale);
 salesRouter.put("/:id", updateSale);
 
 salesRouter.delete("/:id", deleteSale);
+
+// salesRouter.get("/create", createSales);

@@ -43,3 +43,27 @@ export const deleteSale = async (req: Request, res: Response) => {
   const sale = await Sale.findByIdAndDelete(id);
   res.status(200).json({ sale });
 };
+
+const getRandomInt = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+export const createSales = async (req: Request, res: Response) => {
+  const { sales, minAge, maxAge, minTemp, maxTemp, coldP } = req.body;
+  const createdSales = [];
+
+  for (let i = 0; i < sales; i++) {
+    const drink = Math.random() < coldP ? 0 : 1;
+    const sale = new Sale({
+      age: getRandomInt(minAge, maxAge),
+      temperature: getRandomInt(minTemp, maxTemp),
+      drink,
+    });
+    await sale.save();
+    createdSales.push(sale);
+  }
+
+  res.status(201).json({ createdSales });
+};

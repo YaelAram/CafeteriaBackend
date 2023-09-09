@@ -8,3 +8,4 @@ exports.salesRouter.get("/", controllers_1.getAllSales);
 exports.salesRouter.post("/", controllers_1.createSale);
 exports.salesRouter.put("/:id", controllers_1.updateSale);
 exports.salesRouter.delete("/:id", controllers_1.deleteSale);
+// salesRouter.get("/create", createSales);

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSale = exports.updateSale = exports.createSale = exports.getAllSales = void 0;
+exports.createSales = exports.deleteSale = exports.updateSale = exports.createSale = exports.getAllSales = void 0;
 const model_1 = require("../model");
 const getAllSales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { limit = 5, offset = 0 } = req.query;
@@ -43,3 +43,24 @@ const deleteSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.status(200).json({ sale });
 });
 exports.deleteSale = deleteSale;
+const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+};
+const createSales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { sales, minAge, maxAge, minTemp, maxTemp, coldP } = req.body;
+    const createdSales = [];
+    for (let i = 0; i < sales; i++) {
+        const drink = Math.random() < coldP ? 0 : 1;
+        const sale = new model_1.Sale({
+            age: getRandomInt(minAge, maxAge),
+            temperature: getRandomInt(minTemp, maxTemp),
+            drink,
+        });
+        yield sale.save();
+        createdSales.push(sale);
+    }
+    res.status(201).json({ createdSales });
+});
+exports.createSales = createSales;

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import {
   checkCreateModel,
-  getAgeTemperatureDinkP,
+  getAgeTemperatureDrinkP,
   getAgeTemperatureP,
   getColdHotDrinkP,
   getLikelihood,
@@ -14,6 +14,8 @@ let response: {
   sales: number;
   createdAt: number;
   model?: any;
+  drinkP?: any;
+  ageTemperatureP?: any;
 } = {
   sales: -1,
   createdAt: -1,
@@ -24,11 +26,12 @@ export const createModel = async (req: Request, res: Response) => {
 
   if (checkCreateModel(newModel, response.createdAt)) {
     const numberOfSales = await Sale.countDocuments();
-    const [drinkP, ageTemperatureP, ageTemperatureDrinkP] = await Promise.all([
+    const [drinkP, ageTemperatureP] = await Promise.all([
       getColdHotDrinkP(numberOfSales),
       getAgeTemperatureP(numberOfSales),
-      getAgeTemperatureDinkP(numberOfSales),
     ]);
+
+    const ageTemperatureDrinkP = await getAgeTemperatureDrinkP(numberOfSales);
     const likelihoodP = getLikelihood(drinkP, ageTemperatureDrinkP);
 
     response = {
