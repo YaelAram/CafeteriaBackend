@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.weather = void 0;
 const url = "https://api.openweathermap.org/data/2.5/weather";
 const weather = (lat, lon) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d;
+    var _a;
     const params = new URLSearchParams();
     params.append("appid", (_a = process.env.Weather) !== null && _a !== void 0 ? _a : "");
     params.append("lat", String(lat));
@@ -21,12 +21,9 @@ const weather = (lat, lon) => __awaiter(void 0, void 0, void 0, function* () {
     params.append("lang", "es");
     const resp = yield fetch(`${url}?${params.toString()}`);
     const weatherResp = yield resp.json();
-    const weatherDes = (_b = weatherResp.weather.at(0)) === null || _b === void 0 ? void 0 : _b.description;
     return {
         temp: Math.round(weatherResp.main.temp),
         location: weatherResp.name,
-        weather: `${(_c = weatherDes === null || weatherDes === void 0 ? void 0 : weatherDes.at(0)) === null || _c === void 0 ? void 0 : _c.toUpperCase()}${weatherDes === null || weatherDes === void 0 ? void 0 : weatherDes.slice(1)}`,
-        icon: `https://openweathermap.org/img/wn/${(_d = weatherResp.weather.at(0)) === null || _d === void 0 ? void 0 : _d.icon}@2x.png`,
     };
 });
 exports.weather = weather;
