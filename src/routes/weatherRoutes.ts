@@ -3,4 +3,4 @@ import { getWeather } from "../controllers";
 
 export const weatherRouter = Router();
 
-weatherRouter.get("/", getWeather);
+weatherRouter.post("/", getWeather);
