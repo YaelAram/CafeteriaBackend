@@ -2,13 +2,14 @@ import cors from "cors";
 import express from "express";
 
 import { conectToDataBase } from "../database";
-import { guessRouter, salesRouter } from "../routes";
+import { guessRouter, salesRouter, weatherRouter } from "../routes";
 
 export class Server {
   private app;
   private PORT: number;
   private salesPath: string = "/api/sales";
   private guessPath: string = "/api/guess";
+  private weatherPath: string = "/api/weather";
 
   constructor() {
     this.app = express();
@@ -32,6 +33,7 @@ export class Server {
   private routes(): void {
     this.app.use(this.salesPath, salesRouter);
     this.app.use(this.guessPath, guessRouter);
+    this.app.use(this.weatherPath, weatherRouter);
   }
 
   public listen(): void {

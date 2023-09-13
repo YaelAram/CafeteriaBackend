@@ -22,6 +22,7 @@ class Server {
         var _a;
         this.salesPath = "/api/sales";
         this.guessPath = "/api/guess";
+        this.weatherPath = "/api/weather";
         this.app = (0, express_1.default)();
         this.PORT = Number((_a = process.env.PORT) !== null && _a !== void 0 ? _a : "8080");
         this.conectDB();
@@ -40,6 +41,7 @@ class Server {
     routes() {
         this.app.use(this.salesPath, routes_1.salesRouter);
         this.app.use(this.guessPath, routes_1.guessRouter);
+        this.app.use(this.weatherPath, routes_1.weatherRouter);
     }
     listen() {
         this.app.listen(this.PORT, () => console.log(`Listening at port ${this.PORT}`));
