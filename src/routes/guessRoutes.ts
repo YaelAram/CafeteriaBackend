@@ -3,4 +3,4 @@ import { createModel } from "../controllers";
 
 export const guessRouter = Router();
 
-guessRouter.get("/", createModel);
+guessRouter.post("/", createModel);
