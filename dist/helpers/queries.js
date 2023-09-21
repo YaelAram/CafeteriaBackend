@@ -35,17 +35,11 @@ const getAgeTempDrink = (key, { filter: age }, { filter: temperature }, { filter
 const getTempDrinkByAge = (age) => {
     return Promise.all([
         getAgeTempDrink(`${age.key}${interfaces_1.Temp.FREEZE.key}${interfaces_1.Drink.COLD.key}`, age, interfaces_1.Temp.FREEZE, interfaces_1.Drink.COLD),
-        getAgeTempDrink(`${age.key}${interfaces_1.Temp.FREEZE.key}${interfaces_1.Drink.HOT.key}`, age, interfaces_1.Temp.FREEZE, interfaces_1.Drink.HOT),
         getAgeTempDrink(`${age.key}${interfaces_1.Temp.COLD.key}${interfaces_1.Drink.COLD.key}`, age, interfaces_1.Temp.COLD, interfaces_1.Drink.COLD),
-        getAgeTempDrink(`${age.key}${interfaces_1.Temp.COLD.key}${interfaces_1.Drink.HOT.key}`, age, interfaces_1.Temp.COLD, interfaces_1.Drink.HOT),
         getAgeTempDrink(`${age.key}${interfaces_1.Temp.COOL.key}${interfaces_1.Drink.COLD.key}`, age, interfaces_1.Temp.COOL, interfaces_1.Drink.COLD),
-        getAgeTempDrink(`${age.key}${interfaces_1.Temp.COOL.key}${interfaces_1.Drink.HOT.key}`, age, interfaces_1.Temp.COOL, interfaces_1.Drink.HOT),
         getAgeTempDrink(`${age.key}${interfaces_1.Temp.MILD.key}${interfaces_1.Drink.COLD.key}`, age, interfaces_1.Temp.MILD, interfaces_1.Drink.COLD),
-        getAgeTempDrink(`${age.key}${interfaces_1.Temp.MILD.key}${interfaces_1.Drink.HOT.key}`, age, interfaces_1.Temp.MILD, interfaces_1.Drink.HOT),
         getAgeTempDrink(`${age.key}${interfaces_1.Temp.HOT.key}${interfaces_1.Drink.COLD.key}`, age, interfaces_1.Temp.HOT, interfaces_1.Drink.COLD),
-        getAgeTempDrink(`${age.key}${interfaces_1.Temp.HOT.key}${interfaces_1.Drink.HOT.key}`, age, interfaces_1.Temp.HOT, interfaces_1.Drink.HOT),
         getAgeTempDrink(`${age.key}${interfaces_1.Temp.BOILING.key}${interfaces_1.Drink.COLD.key}`, age, interfaces_1.Temp.BOILING, interfaces_1.Drink.COLD),
-        getAgeTempDrink(`${age.key}${interfaces_1.Temp.BOILING.key}${interfaces_1.Drink.HOT.key}`, age, interfaces_1.Temp.BOILING, interfaces_1.Drink.HOT),
     ]);
 };
 exports.getTempDrinkByAge = getTempDrinkByAge;

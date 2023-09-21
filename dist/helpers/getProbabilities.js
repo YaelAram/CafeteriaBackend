@@ -9,20 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLikelihood = exports.getAgeTemperatureDrinkP = exports.getAgeTemperatureP = exports.getColdHotDrinkP = void 0;
+exports.getLikelihood = exports.getAgeTemperatureDrinkP = exports.getAgeTemperatureP = exports.getColdDrinkP = void 0;
 const helpers_1 = require("../helpers");
 const interfaces_1 = require("../interfaces");
 const model_1 = require("../model");
-const getColdHotDrinkP = (numberOfSales) => __awaiter(void 0, void 0, void 0, function* () {
+const getColdDrinkP = (numberOfSales) => __awaiter(void 0, void 0, void 0, function* () {
     const drinkP = new Map();
     const { key, filter: drink } = interfaces_1.Drink.COLD;
     const coldDrinkPeople = yield model_1.Sale.find({ drink });
     const coldDrinkP = coldDrinkPeople.length / numberOfSales;
     drinkP.set(key, coldDrinkP);
-    drinkP.set(interfaces_1.Drink.HOT.key, 1.0 - coldDrinkP);
     return drinkP;
 });
-exports.getColdHotDrinkP = getColdHotDrinkP;
+exports.getColdDrinkP = getColdDrinkP;
 const getAgeTemperatureP = (numberOfSales) => __awaiter(void 0, void 0, void 0, function* () {
     // Cada llamada al metodo getTempByAge hace 6 llamadas, al llamarse 7 veces da un total de 42 consultas
     let results = yield Promise.all([
@@ -42,7 +41,7 @@ const getAgeTemperatureP = (numberOfSales) => __awaiter(void 0, void 0, void 0, 
 });
 exports.getAgeTemperatureP = getAgeTemperatureP;
 const getAgeTemperatureDrinkP = (numberOfSales) => __awaiter(void 0, void 0, void 0, function* () {
-    // Cada llamada al metodo getTempByAge hace 12 llamadas, al llamarse 7 veces da un total de 84 consultas
+    // Cada llamada al metodo getTempByAge hace 6 llamadas, al llamarse 7 veces da un total de 42 consultas
     const results = yield Promise.all([
         (0, helpers_1.getTempDrinkByAge)(interfaces_1.Age.CHILD),
         (0, helpers_1.getTempDrinkByAge)(interfaces_1.Age.TEEN),
@@ -62,11 +61,7 @@ exports.getAgeTemperatureDrinkP = getAgeTemperatureDrinkP;
 const getLikelihood = (drinkP, ageTempDrinkP) => {
     const likelihood = new Map();
     for (const [key, value] of ageTempDrinkP.entries()) {
-        const { key: cold } = interfaces_1.Drink.COLD;
-        const drinkTypeP = key.endsWith(cold)
-            ? drinkP.get(cold)
-            : drinkP.get(interfaces_1.Drink.HOT.key);
-        const likelihoodP = value / drinkTypeP;
+        const likelihoodP = value / drinkP.get(interfaces_1.Drink.COLD.key);
         likelihood.set(key, likelihoodP);
     }
     return likelihood;

@@ -4,7 +4,7 @@ import {
   checkCreateModel,
   getAgeTemperatureDrinkP,
   getAgeTemperatureP,
-  getColdHotDrinkP,
+  getColdDrinkP,
   getLikelihood,
   guess,
 } from "../helpers";
@@ -26,12 +26,12 @@ export const createModel = async (req: Request, res: Response) => {
 
   if (checkCreateModel(newModel, response.createdAt)) {
     const numberOfSales = await Sale.countDocuments();
-    const [drinkP, ageTemperatureP] = await Promise.all([
-      getColdHotDrinkP(numberOfSales),
+    const [drinkP, ageTemperatureP, ageTemperatureDrinkP] = await Promise.all([
+      getColdDrinkP(numberOfSales),
       getAgeTemperatureP(numberOfSales),
+      getAgeTemperatureDrinkP(numberOfSales),
     ]);
 
-    const ageTemperatureDrinkP = await getAgeTemperatureDrinkP(numberOfSales);
     const likelihoodP = getLikelihood(drinkP, ageTemperatureDrinkP);
 
     response = {

@@ -2,14 +2,13 @@ import { getTempByAge, getTempDrinkByAge } from "../helpers";
 import { Age, Drink } from "../interfaces";
 import { Sale } from "../model";
 
-export const getColdHotDrinkP = async (numberOfSales: number) => {
+export const getColdDrinkP = async (numberOfSales: number) => {
   const drinkP = new Map<string, number>();
   const { key, filter: drink } = Drink.COLD;
   const coldDrinkPeople = await Sale.find({ drink });
   const coldDrinkP = coldDrinkPeople.length / numberOfSales;
 
   drinkP.set(key, coldDrinkP);
-  drinkP.set(Drink.HOT.key, 1.0 - coldDrinkP);
 
   return drinkP;
 };
@@ -35,7 +34,7 @@ export const getAgeTemperatureP = async (numberOfSales: number) => {
 };
 
 export const getAgeTemperatureDrinkP = async (numberOfSales: number) => {
-  // Cada llamada al metodo getTempByAge hace 12 llamadas, al llamarse 7 veces da un total de 84 consultas
+  // Cada llamada al metodo getTempByAge hace 6 llamadas, al llamarse 7 veces da un total de 42 consultas
   const results = await Promise.all([
     getTempDrinkByAge(Age.CHILD),
     getTempDrinkByAge(Age.TEEN),
@@ -61,12 +60,7 @@ export const getLikelihood = (
   const likelihood = new Map<string, number>();
 
   for (const [key, value] of ageTempDrinkP.entries()) {
-    const { key: cold } = Drink.COLD;
-    const drinkTypeP = key.endsWith(cold)
-      ? drinkP.get(cold)!
-      : drinkP.get(Drink.HOT.key)!;
-    const likelihoodP = value / drinkTypeP;
-
+    const likelihoodP = value / drinkP.get(Drink.COLD.key)!;
     likelihood.set(key, likelihoodP);
   }
 
