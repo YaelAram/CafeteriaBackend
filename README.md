@@ -8,6 +8,7 @@ contamos con la colleción _**Sales**_ esta guarda toda la información relacion
 
 - NodeJS 18.14.0 (Entorno de ejecución de JavaScript)
 - YARN 1.22.19 (Manejador de paquetes de JavaScript)
+- TypeScript 5.0.2 (Super set de JavaScript)
 - CORS 2.8.5 (Da acceso a sitios externos para realizar peticiones a la API)
 - DOTENV 16.3.1 (Permite leer variables de entorno localizadas en el archivo .env)
 - EXPRESS 4.18.2 (Facilita la construcción de una API REST)
